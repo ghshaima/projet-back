@@ -2,6 +2,8 @@ class UsersController < ApplicationController
   before_action :authorize_request  
 
     def confirm_email
+       #hello
+       
       user = User.find_by_confirm_token(params[:id])
       if user
         user.email_confirmed = true
