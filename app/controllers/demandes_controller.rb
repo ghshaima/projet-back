@@ -10,10 +10,9 @@ class DemandesController < ApplicationController
         
         @demande = Demande.new(post_params) 
         days= ((@demande.end_date.to_date - @demande.start_date.to_date).to_i)+1
-        
         @demande.update_attribute(:days,days)
         if @demande.save
-    
+          
           render json: @demande, statut: :created, location: @demande , include: [  :user, :motif  ]
     
         else
@@ -24,15 +23,17 @@ class DemandesController < ApplicationController
       def show
         @demande = Demande.find(params[:id])
         render json: @demande, include: [  :user, :motif   ]
-      end
+      end   
     
       def update
         @demande = Demande.find(params[:id])
-        
-        if post_params2[:status] =="encours" || post_params2[:status] =="refused" 
+        byebug
+        if post_params2[:status] == 0 || post_params2[:status] == 1
+          byebug
           @demande.update(post_params2)
           render json: @demande, include: [:user, :motif]
-        elsif post_params2[:status] =="accepted"
+        elsif post_params2[:status] == 2
+          byebug  
           demande_days = (@demande.days).to_f
           @user = User.where("id = ?" ,  @demande.user_id )   
           balance_days = @user.pluck(:nbr_days).join(',').to_f       

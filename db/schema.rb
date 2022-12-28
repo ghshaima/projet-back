@@ -43,10 +43,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_113602) do
   end
 
   create_table "demandes", force: :cascade do |t|
-    t.string "status"
+    t.integer "status", default: 0
     t.date "start_date"
     t.date "end_date"
     t.string "refustype"
+    t.integer "days"
     t.bigint "user_id"
     t.bigint "motif_id"
     t.index ["end_date"], name: "index_demandes_on_end_date"
